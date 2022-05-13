@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Panier
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center">Votre panier</h1>
+	{% if items %}
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Produit</th>
+					<th>Prix</th>
+					<th>Quantité</th>
+					<th>Total</th>
+					<th></th>
+                    <th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for item in items %}
+					<tr>
+						<td>{{item.produit.nom}}</td>
+						<td>{{item.produit.prix}}</td>
+						<td>{{item.quantity}}</td>
+						<td>{{item.produit.prix * item.quantity}}€</td>
+                        <td>
+							
+                            <a href="{{path('cart_add', {id: item.produit.id})}}" class="btn-sm btn-primary">
+								<i class="fas fa-cart-plus"></i>
+							</a>
+						</td>
+                        <td>
+							
+                            <a href="{{path('cart_remove1', {id: item.produit.id})}}" class="btn-sm btn-primary">
+								<i class="fas fa-cart-minus"></i>
+							</a>
+						</td>
+                        
+						<td>
+							<a href="{{path('cart_remove', {id: item.produit.id})}}" class="btn-sm btn-danger">
+								<i class="fas fa-trash"></i>
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="3" class="text-end">Total :</td>
+					<td>{{total}}€</td>
+				</tr>
+			</tfoot>
+		</table>
+        <a class="btn btn-primary" href={{path('pay')}}>payer</a>
+	{% else %}
+		<p>Panier vide !</p>
+	{% endif %}
+    
+{% endblock %}

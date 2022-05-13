@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+{% block title %}Ajouter un article{% endblock %}
+{% block body %}
+    {{form_start(formProd)}}
+    {{form_row(formProd.nom)}}
+    {{form_row(formProd.description)}}
+    {{form_row(formProd.prix)}}
+    {{form_row(formProd.imageFile)}}
+    {{form_row(formProd.categorie)}}
+    <button class="btn btn-primary">Ajouter au site</button>
+    {{form_end(formProd)}}
+{% endblock %}

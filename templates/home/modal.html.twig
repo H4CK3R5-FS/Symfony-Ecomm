@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<!-- The Modal -->
+	<div class="modal" id="myModal">
+		<div class="modal-dialog">
+			<div
+				class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">AUTHENTIFICATION</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+                    <div class="container ">
+                        
+                        <a class="btn btn-primary col-md-5 me-5" href={{path('app_login')}}>Connexion</a>
+                        <a class="btn btn-primary col-md-5 ms-3" href={{path('app_register')}}>Inscription</a>
+                        
+                    </div>
+					
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}

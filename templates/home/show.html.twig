@@ -1,0 +1,57 @@
+{% extends "base.html.twig" %}
+{% block title %}
+	{{article.nom}}
+{% endblock %}
+{% block body %}
+	<section class="row article">
+		<article class="col-md-6 mx-auto text-center border border-dark mb-3 p-3 mt-3 mr-1">
+			<h2>{{article.nom}}</h2>
+			<div class="metadata">
+				catégorie:
+				{{article.categorie.titre}}
+			</div>
+
+			<div class="content">
+				<img src="{{asset('images/articles/'~article.image)}}" alt="" class="img-fluid"><br>
+				{{ article.description | raw}}
+				<br>
+				prix =
+				{{article.prix}}€
+
+				<br>
+				ajouté par
+				{{data.UserUsername}}
+			</div>
+		</article>
+		<div class="card-body text-end">
+			<a href="{{path('cart_add', {id: id})}}" class="card-link btn btn-primary">Ajouter panier</a>
+		</div>
+
+
+	</section>
+	{% if data.username == app.user.username %}
+		<a href="{{path('edit_article', {id: id})}}" class="btn btn-warning">modifier</a>
+	{% endif %}
+	<h2 class="text-center mx-auto m-3">commentaire</h2>
+	<section id="commentaire" class="col-md-10 mx-auto">
+		{{form_start(formCom)}}
+		{{form_row(formCom.content)}}
+		<button class="btn btn-primary">Répondre</button>
+		{{form_end(formCom)}}
+
+		{% for comment in all %}
+			<div class="comment">
+				<div
+					class="row">
+					{# {{comment.author}} #}
+					(<small>{{ comment.createdAt|date('d/m/Y à H:i:s') }}</small>)
+				</div>
+				<div class="col-md-9">
+					{{comment.content|raw}}
+				</div>
+			</div>
+		{% endfor %}
+	</section>
+
+
+{% endblock %}
