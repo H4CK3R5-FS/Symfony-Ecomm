@@ -18,6 +18,7 @@ class CartService
 
     public function add($id){
 
+        
         $session = $this->rs->getSession();
         $cart = $session->get('cart', []);
         if (!empty($cart[$id])) {
