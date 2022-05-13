@@ -36,6 +36,9 @@ class HomeController extends AbstractController
     #[Route('/home', name: 'app_homes')]
     public function home(ProduitRepository $repo, Request $request): Response
     {
+        if (!$this->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('app_home');
+        }
         $form = $this->createForm(RechercheType::class);
         $form->handleRequest($request);
 
@@ -59,6 +62,9 @@ class HomeController extends AbstractController
     #[Route('/home/edit/{id}', name: "edit_article", requirements: ["id" => "\d+"])]
     public function forms(Request $rq, EntityManagerInterface $manager, Produit $produits = null, UserRepository $user)
     {
+        if (!$this->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('app_home');
+        }
         if (!$produits) {
             $produits = new Produit;
         }
@@ -86,7 +92,9 @@ class HomeController extends AbstractController
     #[Route("/home/show/{id}", name: "show", requirements: ["id" => "\d+"])]
     public function show(Request $rq, EntityManagerInterface $manager, Produit $articles, UserRepository $us, CommentaireRepository $allCmt,ProduitRepository $prod, $id): Response
     {
-
+        if (!$this->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('app_home');
+        }
         $test = $prod->find($id);
 
         $user = $us->findOneBy([
@@ -150,6 +158,9 @@ class HomeController extends AbstractController
     #[Route('/home/mesproduits', name: 'ecom_mesproduits')]
     public function mesprod(Request $request, UserRepository $us, ProduitRepository $prod)
     {
+        if (!$this->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('app_home');
+        }
         $user = $this->getUser()->getUsername();
         $data = $us->findOneBy([
             'email' => $user
@@ -167,6 +178,9 @@ class HomeController extends AbstractController
     #[Route('/home/panier', name: 'app_cart')]
     public function panier(RequestStack $rs, ProduitRepository $repo): Response
     {
+        if (!$this->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('app_home');
+        }
         $session = $rs->getSession();
         $cart = $session->get('cart', []);
         $qt = 0;
@@ -228,6 +242,9 @@ class HomeController extends AbstractController
     #[Route("/home/payement", name:"pay")]
     public function pay(RequestStack $rs)
     {
+        if (!$this->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('app_home');
+        }
         $session = $rs->getSession();
         $session->remove('cart');
         $session->remove('qt');
